@@ -1,0 +1,9 @@
+netty:
+  serializer:
+    type: PROTOBUF #MESSAGEPACK #KYRO #JDK #HESSIAN #FST #JSON #FLATBUFFERS #THRIFT #PROTOBUF
+  server:
+    host: localhost
+    port: 8083
+  registry:
+    type: zookeeper
+    address: localhost:2181

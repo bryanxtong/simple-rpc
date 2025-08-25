@@ -1,0 +1,37 @@
+//G:\springcloud\vertx\netty-shorturl\src\main>protoc proto\rpc_message.proto --java_out=../../src/main/java
+syntax = "proto3";
+
+package com.bryan.rpc.common.model.protobuf;
+option java_package = "com.bryan.rpc.common.model.protobuf";
+option java_outer_classname = "RpcMessageProto";
+enum ProtobufMessageType{
+  REQUEST = 0;
+  RESPONSE = 1;
+}
+
+message ProtobufDynamicParam{
+  bytes value =1;
+  string type = 2;
+}
+
+message ProtobufRpcRequest{
+  string className = 1;
+  string methodName = 2;
+  repeated ProtobufDynamicParam params = 3;
+  string requestId = 4;
+  string serviceName = 5;
+}
+
+message ProtobufRpcResponse{
+  bytes result = 1;
+  string error = 2;
+  string requestId = 3;
+}
+
+message RpcMessageWrapper{
+  ProtobufMessageType type = 1;
+  oneof body{
+    ProtobufRpcRequest request = 2;
+    ProtobufRpcResponse response = 3;
+  }
+}

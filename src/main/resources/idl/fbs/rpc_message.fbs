@@ -1,0 +1,22 @@
+namespace com.bryan.rpc.common.model.fbs;
+table FbsDynamicParam{
+   value:[ubyte];
+   type: string;
+}
+
+table FbsRpcRequest {
+    className: string;
+    methodName: string;
+    params: [FbsDynamicParam];
+    requestId: string;
+    serviceName: string;
+}
+
+table FbsRpcResponse {
+    result: [ubyte];
+    error: string;
+    requestId: string;
+}
+
+root_type FbsRpcRequest;
+root_type FbsRpcResponse;

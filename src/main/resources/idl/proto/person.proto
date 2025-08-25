@@ -1,0 +1,9 @@
+syntax = "proto3";
+package com.bryan.rpc.example.service;
+option java_package = "com.bryan.rpc.example.service";
+option java_outer_classname = "PersonOuterClass";
+
+message Person {
+  string name = 1;
+  int32 age = 2;
+}
