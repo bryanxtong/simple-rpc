@@ -3,11 +3,18 @@ simple-rpc is a simple rpc program which is to illustrate the usage of different
 # Functions Supported
 ```
 1. It supports sync call and async call with CompletableFuture
-2. It support encoding/decoding format like Json, flatbuffers,thrift,protobuf,kyro, messagepack,jdk,fst and hessian2 but It
- only supports one way at one time via the application.yml config file.
+
+2. It support encoding/decoding format like Json, flatbuffers,thrift,protobuf,kyro, 
+messagepack,jdk,fst and hessian2 but It only supports one way at one time via 
+the application.yml config file.
+
 3.Flatbuffers/thrift/protobuf are based on IDL, and others and based on Non-IDL
-4.for idl generated code, the dynamic field, for example, Response.result, Thrift/flatbuffers is using jackson-dataformat-msgpack and protobuf is using jackson
-5.It will use application.yml for user setting, and It will override the setting in config.yml which is used default by the framework.
+
+4.for idl generated code, the dynamic field, for example, Response.result, 
+Thrift/flatbuffers is using jackson-dataformat-msgpack and protobuf is using jackson
+
+5.It will use application.yml for user setting, and It will override the setting 
+in config.yml which is used default by the framework.
 ``` 
 # How to Use
 1. use a zk as a service registry
