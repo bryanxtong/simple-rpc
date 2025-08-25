@@ -1,6 +1,6 @@
 simple-rpc is a simple rpc program which is to illustrate the usage of different encoding/decoding format integration, like Json, flatbuffers,thrift,protobuf,kyro, messagepack,jdk,fst and hessian2
 
-# Funtions Supported
+# Functions Supported
 ```
 1. It supports sync call and async call with CompletableFuture
 2. It support encoding/decoding format like Json, flatbuffers,thrift,protobuf,kyro, messagepack,jdk,fst and hessian2 but It
@@ -23,7 +23,7 @@ simple-rpc is a simple rpc program which is to illustrate the usage of different
 --add-opens java.base/java.time=ALL-UNNAMED
 
 ```
-netty server side needs to specify the backages of rpc servers to scan
+netty server side needs to specify the backages of rpc services to scan
 ```
 import com.bryan.rpc.server.RpcServer;
 import com.bryan.rpc.server.RpcServerBootstrap;
@@ -35,7 +35,7 @@ public class NettyExampleServerApp {
     }
 }
 ```
-netty server clientside
+netty server clientside need to close the rpcclient as we have hidden it behind the proxy factory
 ```
 package com.bryan.rpc.example.service;
 import com.bryan.rpc.client.proxy.RpcProxyFactory;
