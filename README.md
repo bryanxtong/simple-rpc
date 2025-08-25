@@ -4,21 +4,21 @@ simple-rpc is a simple rpc program which is to illustrate the usage of different
 ```
 1. It supports sync call and async call with CompletableFuture
 
-2. It support encoding/decoding format like Json, flatbuffers,thrift,protobuf,kyro, 
+2. It supports encoding/decoding format like Json,flatbuffers,thrift,protobuf,kyro, 
 messagepack,jdk,fst and hessian2 but It only supports one way at one time via 
 the application.yml config file.
 
-3.Flatbuffers/thrift/protobuf are based on IDL, and others and based on Non-IDL
+3.Flatbuffers/thrift/protobuf are based on IDL, and others are based on Non-IDL
 
-4.for idl generated code, the dynamic field, for example, Response.result, 
+4.For idl generated code, the dynamic field, for example, Response.result, 
 Thrift/flatbuffers is using jackson-dataformat-msgpack and protobuf is using jackson
 
-5.It will use application.yml for user setting, and It will override the setting 
+5.It will use application.yml for user application, and will override the setting 
 in config.yml which is used default by the framework.
 ``` 
 # How to Use
 1. use a zk as a service registry
-2. you need to add the following before you continue as serialization library hessian2/fst etc need it
+2. you need to add the following before you continue as serialization library hessian2/fst etc. need it
 ```
 --add-opens java.base/java.lang=ALL-UNNAMED
 --add-opens java.base/java.math=ALL-UNNAMED
@@ -42,7 +42,7 @@ public class NettyExampleServerApp {
     }
 }
 ```
-netty server clientside need to close the rpcclient as we have hidden it behind the proxy factory
+netty server clientside needs to close the rpcclient as we have hidden it behind the proxy factory
 ```
 package com.bryan.rpc.example.service;
 import com.bryan.rpc.client.proxy.RpcProxyFactory;
