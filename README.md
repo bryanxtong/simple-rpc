@@ -2,7 +2,8 @@ simple-rpc is a simple rpc program which is to illustrate the usage of different
 
 # Funtions Supported
  > It supports sync call and async call with CompletableFuture
- > It support encoding/decoding format like Json, flatbuffers,thrift,protobuf,kyro, messagepack,jdk,fst and hessian2
+ > It support encoding/decoding format like Json, flatbuffers,thrift,protobuf,kyro, messagepack,jdk,fst and hessian2 but It
+ only supports one way at one time via the application.yml config file.
  > flatbuffers/thrift/protobuf are based on IDL, and others and based on Non-IDL
  > for idl generated code, the dynamic field, for example, Response.result, Thrift/flatbuffers is using jackson-dataformat-msgpack and protobuf is using jackson
  > It will use application.yml for user setting, and It will override the setting in config.yml which is used default by the framework.
