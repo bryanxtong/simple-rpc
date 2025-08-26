@@ -23,7 +23,7 @@ public class NettyExampleClient {
             System.out.println(sum2);
 
             helloService.print(122,4545);
-            CompletableFuture<Void> print = helloService.print(a, b);
+            CompletableFuture<Void> print = helloService.printAsync(a, b);
             print.join();
             Integer sum3 = helloService.sumBox(a, b);
             System.out.println(sum3);

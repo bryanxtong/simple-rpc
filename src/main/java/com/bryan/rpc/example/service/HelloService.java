@@ -24,7 +24,7 @@ public interface HelloService {
 
     public void print(int a, int b);
 
-    public CompletableFuture<Void> print(Integer a, Integer b);
+    public CompletableFuture<Void> printAsync(Integer a, Integer b);
 
     public void print(String name, LocalDateTime dateTime);
 }
