@@ -9,7 +9,7 @@ import org.apache.zookeeper.CreateMode;
 import java.util.*;
 
 public class ZkServiceRegistry implements ServiceRegistry {
-    private CuratorFramework curator = null;
+    private final CuratorFramework curator;
     private final Set<String> registeredPath = new HashSet<>();
 
     public ZkServiceRegistry(String address) {
@@ -21,16 +21,16 @@ public class ZkServiceRegistry implements ServiceRegistry {
         curator.start();
         curator.getConnectionStateListenable().addListener((curatorFramework, connectionState) -> {
             if (connectionState == ConnectionState.LOST || connectionState == ConnectionState.SUSPENDED) {
-                cleanupAllRegisteredServices();
+                registeredPath.clear();
             }
-            registeredPath.clear();
         });
     }
 
-    public ZkServiceRegistry(){
-        this("localhost" + ":"+2181);
+    public ZkServiceRegistry() {
+        this("localhost" + ":" + 2181);
     }
 
+    @Deprecated
     private void cleanupAllRegisteredServices() {
         try {
             for (String path : registeredPath) {
@@ -61,11 +61,11 @@ public class ZkServiceRegistry implements ServiceRegistry {
         List<ServiceInstance> serviceInstances = new ArrayList<>();
         String servicePath = "/rpc/services/" + serviceName;
         List<String> instances = curator.getChildren().forPath(servicePath);
-        for(String instanceId : instances) {
+        for (String instanceId : instances) {
             byte[] bytes = curator.getData().forPath(servicePath + "/" + instanceId);
             String data = new String(bytes);
             String[] split = data.split(":");
-            ServiceInstance serviceInstance = new ServiceInstance(serviceName,instanceId ,split[0], Integer.parseInt(split[1]), new LinkedHashMap<>());
+            ServiceInstance serviceInstance = new ServiceInstance(serviceName, instanceId, split[0], Integer.parseInt(split[1]), new LinkedHashMap<>());
             serviceInstances.add(serviceInstance);
         }
         return serviceInstances;
@@ -74,7 +74,7 @@ public class ZkServiceRegistry implements ServiceRegistry {
     @Override
     public void deregisterInstance(ServiceInstance serviceInstance) throws Exception {
         String instancePath = "/rpc/services/" + serviceInstance.getServiceName() + "/" + serviceInstance.getInstanceId();
-        if(curator.checkExists().forPath(instancePath)!= null){
+        if (curator.checkExists().forPath(instancePath) != null) {
             curator.delete().deletingChildrenIfNeeded().forPath(instancePath);
         }
     }
@@ -86,15 +86,5 @@ public class ZkServiceRegistry implements ServiceRegistry {
 
     public void close() {
         curator.close();
-    }
-
-    public static void main(String[] args) {
-        ZkServiceRegistry zkServiceRegistry = new ZkServiceRegistry();
-        try {
-            List<ServiceInstance> allInstances = zkServiceRegistry.getServiceInstances("com.example.rpc.protobuf.service.HelloService");
-            System.out.println(allInstances);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 }

@@ -40,7 +40,7 @@ public class RpcProxyFactory {
         LoadBalancer loadBalancer = LoadBanlancerFactory.createLoadBalancer(annotation == null ? "random" : annotation.loadbalance());
         List<ServiceInstance> serviceInstances = serviceRegistry.getServiceInstances(serviceName);
         if (serviceInstances == null || serviceInstances.isEmpty()) {
-            throw new IllegalStateException("no service instance found for service name " + serviceName);
+            throw new IllegalStateException("no service instance found for service name: " + serviceName);
         }
         ServiceInstance serviceInstance = loadBalancer.choose(serviceInstances);
         RpcClient<RpcRequest, RpcResponse> rpcClient = this.getOrCreateRpcClient(loadBalancer, serviceInstance);
