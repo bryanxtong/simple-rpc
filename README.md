@@ -32,6 +32,8 @@ in config.yml which is used default by the framework.
 ```
 netty server side needs to specify the backages of rpc services to scan
 ```
+package com.bryan.rpc.example.service;
+
 import com.bryan.rpc.server.RpcServer;
 import com.bryan.rpc.server.RpcServerBootstrap;
 @RpcServer(scanBasePackages = {"com.bryan.rpc.example.service"})
@@ -39,6 +41,7 @@ public class NettyExampleServerApp {
     public static void main(String[] args) throws Exception {
         RpcServerBootstrap bootstrap = new RpcServerBootstrap(NettyExampleServerApp.class);
         bootstrap.start();
+        bootstrap.awaitTermination();
     }
 }
 ```
