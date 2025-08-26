@@ -12,6 +12,8 @@ public class RpcServerBootstrap {
     private final int port;
     private final ServiceRegistry serviceRegistry;
     private final ObjectServiceRegistry objectServiceRegistry;
+    //the same server, the same UUID, even different services
+    private String uuid = UUID.randomUUID().toString();
 
     public RpcServerBootstrap(Class<?> mainClass) throws Exception {
         this.host = ApplicationConfig.getStringProperty("netty.server.host");
@@ -39,8 +41,6 @@ public class RpcServerBootstrap {
     public void scanAndRegisterService(String basePackage) throws Exception {
         Reflections reflections = new Reflections(basePackage);
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(RpcService.class);
-        //the same server, the same UUID, even different services
-        String uuid = UUID.randomUUID().toString();
         for (Class<?> c : classes) {
             RpcService annotation = c.getAnnotation(RpcService.class);
             Object instance = c.getDeclaredConstructor().newInstance();
