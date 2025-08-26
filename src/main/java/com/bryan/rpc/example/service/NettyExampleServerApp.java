@@ -9,5 +9,6 @@ public class NettyExampleServerApp {
     public static void main(String[] args) throws Exception {
         RpcServerBootstrap bootstrap = new RpcServerBootstrap(NettyExampleServerApp.class);
         bootstrap.start();
+        bootstrap.awaitTermination();
     }
 }

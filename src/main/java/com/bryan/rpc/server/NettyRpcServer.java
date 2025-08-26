@@ -14,9 +14,11 @@ import io.netty.util.concurrent.EventExecutorGroup;
 
 public class NettyRpcServer {
     private static final EventExecutorGroup EVENT_EXECUTORS = new DefaultEventExecutorGroup(Runtime.getRuntime().availableProcessors() * 2);
-
+    private EventLoopGroup bossGroup = new NioEventLoopGroup();
+    private EventLoopGroup workerGroup = new NioEventLoopGroup();
     //serviceName and rpc service implementation mapping
     private ObjectServiceRegistry serviceRegistry;
+    private Channel serverChannel;
 
     public NettyRpcServer(ObjectServiceRegistry serviceRegistry) {
         this.serviceRegistry = serviceRegistry;
@@ -24,8 +26,6 @@ public class NettyRpcServer {
 
     public void start(String host,int port) throws Exception {
         SerializerType serializerType = ApplicationConfigUtil.getSerializeTypeFromConfigFile();
-        EventLoopGroup bossGroup = new NioEventLoopGroup();
-        EventLoopGroup workerGroup = new NioEventLoopGroup();
         try {
             ServerBootstrap bootstrap = new ServerBootstrap();
             bootstrap.group(bossGroup, workerGroup)
@@ -82,10 +82,22 @@ public class NettyRpcServer {
                     });
             ChannelFuture f = bootstrap.bind(host,port).sync();
             System.out.println("Started Netty Rpc Server on port " + port);
-            f.channel().closeFuture().sync();
+            serverChannel = f.channel();
+            //f.channel().closeFuture().sync();
         } finally {
-            workerGroup.shutdownGracefully();
-            bossGroup.shutdownGracefully();
+            //stop();
         }
+    }
+
+    public Channel getServerChannel() {
+        return serverChannel;
+    }
+
+    public void stop(){
+        if(serverChannel != null) {
+            serverChannel.close();
+        }
+        workerGroup.shutdownGracefully();
+        bossGroup.shutdownGracefully();
     }
 }
