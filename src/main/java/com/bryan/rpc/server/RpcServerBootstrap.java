@@ -62,7 +62,7 @@ public class RpcServerBootstrap {
             Object instance = c.getDeclaredConstructor().newInstance();
             this.objectServiceRegistry.addService(annotation.serviceName(), instance);
             ServiceInstance serviceInstance = new ServiceInstance(annotation.serviceName(), uuid, this.host, this.port, new HashMap<>());
-            this.serviceRegistry.registerService(serviceInstance);
+            this.serviceRegistry.registerInstance(serviceInstance);
             activeServiceInstances.add(serviceInstance);
         }
     }
@@ -79,7 +79,7 @@ public class RpcServerBootstrap {
         System.out.println("Stopping Netty server...");
         for (ServiceInstance serviceInstance : activeServiceInstances) {
             try {
-                serviceRegistry.deregisterInstance(serviceInstance);
+                serviceRegistry.unregisterInstance(serviceInstance);
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -38,7 +38,7 @@ public class RpcProxyFactory {
         ServiceRegistry serviceRegistry = ServiceRegistryFactory.createServiceRegistry(type, addr);
         //loadbalancer is in class level, if not configured, set to random
         LoadBalancer loadBalancer = LoadBanlancerFactory.createLoadBalancer(annotation == null ? "random" : annotation.loadbalance());
-        List<ServiceInstance> serviceInstances = serviceRegistry.getServiceInstances(serviceName);
+        List<ServiceInstance> serviceInstances = serviceRegistry.getInstances(serviceName);
         if (serviceInstances == null || serviceInstances.isEmpty()) {
             throw new IllegalStateException("no service instance found for service name: " + serviceName);
         }

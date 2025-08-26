@@ -43,7 +43,7 @@ public class ZkServiceRegistry implements ServiceRegistry {
         }
     }
 
-    public void registerService(ServiceInstance serviceInstance) throws Exception {
+    public void registerInstance(ServiceInstance serviceInstance) throws Exception {
         String servicePath = "/rpc/services/" + serviceInstance.getServiceName();
         String instancePath = servicePath + "/" + serviceInstance.getInstanceId();
 
@@ -57,7 +57,7 @@ public class ZkServiceRegistry implements ServiceRegistry {
     }
 
     @Override
-    public List<ServiceInstance> getServiceInstances(String serviceName) throws Exception {
+    public List<ServiceInstance> getInstances(String serviceName) throws Exception {
         List<ServiceInstance> serviceInstances = new ArrayList<>();
         String servicePath = "/rpc/services/" + serviceName;
         List<String> instances = curator.getChildren().forPath(servicePath);
@@ -72,7 +72,7 @@ public class ZkServiceRegistry implements ServiceRegistry {
     }
 
     @Override
-    public void deregisterInstance(ServiceInstance serviceInstance) throws Exception {
+    public void unregisterInstance(ServiceInstance serviceInstance) throws Exception {
         String instancePath = "/rpc/services/" + serviceInstance.getServiceName() + "/" + serviceInstance.getInstanceId();
         if (curator.checkExists().forPath(instancePath) != null) {
             curator.delete().deletingChildrenIfNeeded().forPath(instancePath);

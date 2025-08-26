@@ -21,7 +21,7 @@ public abstract class LoadBalancerRpcClient<TRequest,TResponse> extends Abstract
     }
 
     public Channel routeToChannel(String serviceName) throws Exception {
-        List<ServiceInstance> serviceInstances = registry.getServiceInstances(serviceName);
+        List<ServiceInstance> serviceInstances = registry.getInstances(serviceName);
         if(serviceInstances == null || serviceInstances.isEmpty()){
             throw new IllegalStateException("No available service: " + serviceName);
         }
