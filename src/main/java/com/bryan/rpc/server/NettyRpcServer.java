@@ -81,7 +81,6 @@ public class NettyRpcServer {
                         }
                     });
             ChannelFuture f = bootstrap.bind(host,port).sync();
-            System.out.println("Started Netty Rpc Server on port " + port);
             serverChannel = f.channel();
             //f.channel().closeFuture().sync();
         } finally {

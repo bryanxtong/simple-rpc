@@ -46,10 +46,8 @@ public class RpcServerBootstrap {
         }
         try {
             startNettyRpcServer();
-            Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-                stop();
-            }));
-            System.out.println("Netty RPC Server started.");
+            Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
+            System.out.println("Netty RPC Server started on port." + port);
         } catch (Exception e) {
             started.set(false);
             throw e;
@@ -87,11 +85,11 @@ public class RpcServerBootstrap {
             }
         }
         activeServiceInstances.clear();
-        try{
+        try {
             if (rpcServer != null) {
                 rpcServer.stop();
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
